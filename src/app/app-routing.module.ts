@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProduitsComponent } from './produits/produits.component';
-import { AddProduitComponent } from './add-produit/add-produit.component';
-import { UpdateProduitComponent } from './update-produit/update-produit.component';
+import { EvenementsComponent } from './evenements/evenements.component';
+import { AddEvenementComponent } from './add-evenement/add-evenement.component';
+import { UpdateEvenementComponent } from './update-evenement/update-evenement.component';
 
 
 const routes: Routes = [
-  {path : "produits", component: ProduitsComponent},
-  {path : "add-produits", component: AddProduitComponent},
-  {path:"updateProduit/:id",component:UpdateProduitComponent},
-  {path :"", redirectTo:"produits", pathMatch:"full" }
+  {path : "evenements", component: EvenementsComponent},
+  {path : "add-evenements", component: AddEvenementComponent},
+  {path:"updateEvenement/:id",component:UpdateEvenementComponent},
+  {path :"", redirectTo:"evenements", pathMatch:"full" }
   
 
 ];

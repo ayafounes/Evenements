@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "MesProduits": {
+    "MesEvenements": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/mes-produits",
+            "outputPath": "dist/mes-evenements",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -77,10 +77,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "MesProduits:build:production"
+              "buildTarget": "MesEvenements:build:production"
             },
             "development": {
-              "buildTarget": "MesProduits:build:development"
+              "buildTarget": "MesEvenements:build:development"
             }
           },
           "defaultConfiguration": "development"

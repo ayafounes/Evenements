@@ -15,14 +15,14 @@
                         <th>id</th><th>Nom</th><th>Prix</th><th>date de creation</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let produit of produits">
+                <tbody *ngFor="let evenement of evenements">
                     <tr>
-                        <td>{{produit.idProduit}}</td>
-                        <td>{{produit.nomProduit}}</td>
-                        <td>{{produit.prixProduit}}</td>
-                        <td>{{ produit?.dateCreation | date:'dd/MM/yyyy' }}</td>
-                        <td><a class="btn btn-danger" (click)="SupprimerProduit(produit)">Supprimer</a></td>
-                        <td><a class="btn btn-success"[routerLink]="['/updateProduit',produit.idProduit]">modifier</a></td>
+                        <td>{{evenement.idEvenement}}</td>
+                        <td>{{evenement.nomEvenement}}</td>
+                        <td>{{evenement.prixEvenement}}</td>
+                        <td>{{ evenement?.dateCreation | date:'dd/MM/yyyy' }}</td>
+                        <td><a class="btn btn-danger" (click)="SupprimerEvenement(evenement)">Supprimer</a></td>
+                        <td><a class="btn btn-success"[routerLink]="['/updateEvenement',evenement.idEvenement]">modifier</a></td>
                        
                     </tr>
                 </tbody>
