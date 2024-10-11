@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
 import { evenement } from '../model/evenement.model';
+import { Genre } from '../model/genre.model';
+
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvenementService {
   evenements : evenement[];
-  
-
-
+  genres: Genre[];
 
   constructor() {
+    this.genres= [
+      {idGenre: 1 ,  nomGenre: "pop"},
+      {idGenre: 2 ,  nomGenre: "rock"},
+      {idGenre: 3 ,  nomGenre: "folk"},
+      {idGenre: 4 ,  nomGenre: "electro-pop"}
+    ];
+
     this.evenements=[
       {
-        idEvenement :1,nomEvenement:"Taylor Swift",prixEvenement:500,dateCreation: new Date("12/27/2020") 
-      },
-      {idEvenement :2,nomEvenement:"Coldplay",prixEvenement:600,dateCreation: new Date("12/27/2023") },
-      {idEvenement :3,nomEvenement:"Hozier",prixEvenement:550,dateCreation: new Date("12/12/2024") },
-      {idEvenement :4,nomEvenement:"Billie Eillish",prixEvenement:700,dateCreation: new Date("10/12/2024") },
-      {idEvenement :5,nomEvenement:"Olivia Rodrigo",prixEvenement:400,dateCreation: new Date("5/12/2023") },
+        idEvenement :1,nomEvenement:"Taylor Swift",prixEvenement:500,dateCreation: new Date("12/27/2020"), genre: {idGenre: 1 ,  nomGenre: "pop"}},
+      {idEvenement :2,nomEvenement:"Coldplay",prixEvenement:600,dateCreation: new Date("12/27/2023"), genre: {idGenre: 2 ,  nomGenre: "rock"} },
+      {idEvenement :3,nomEvenement:"Hozier",prixEvenement:550,dateCreation: new Date("12/12/2024"), genre: {idGenre: 3 ,  nomGenre: "folk"} },
+      {idEvenement :4,nomEvenement:"Billie Eillish",prixEvenement:700,dateCreation: new Date("10/12/2024"), genre: {idGenre: 4 ,  nomGenre: "electro-pop"} },
       
     ];
 
@@ -58,4 +65,12 @@ export class EvenementService {
     return 0;
     });
     }
+
+    listeGenres():Genre[] {
+      return this.genres;
+      }
+    consulterGenre(id:number): Genre{
+      return this.genres.find(cat => cat.idGenre == id)!;
+      }
 }
+

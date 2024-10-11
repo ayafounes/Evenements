@@ -12,7 +12,7 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>id</th><th>Nom</th><th>Prix</th><th>date de creation</th>
+                        <th>id</th><th>Nom</th><th>Prix</th><th>date de creation</th><th>Genre</th>
                     </tr>
                 </thead>
                 <tbody *ngFor="let evenement of evenements">
@@ -21,6 +21,7 @@
                         <td>{{evenement.nomEvenement}}</td>
                         <td>{{evenement.prixEvenement}}</td>
                         <td>{{ evenement?.dateCreation | date:'dd/MM/yyyy' }}</td>
+                        <td>{{evenement.genre.nomGenre}}</td>
                         <td><a class="btn btn-danger" (click)="SupprimerEvenement(evenement)">Supprimer</a></td>
                         <td><a class="btn btn-success"[routerLink]="['/updateEvenement',evenement.idEvenement]">modifier</a></td>
                        
