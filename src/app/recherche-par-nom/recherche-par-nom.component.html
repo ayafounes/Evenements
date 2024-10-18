@@ -1,34 +1,37 @@
 <div class="container">
     <form class="form-inline">
-      <div class="form-group mx-sm-3 mb-2 mt-2">
-        <label>Nom Événement en tapant</label>
-        <input #nom [(ngModel)]="searchTerm" name="searchTerm" (keyup)="onKeyUp(searchTerm)" class="form-control">
-      </div>
-    </form>
-  
-    <div class="card shadow mb-4">
-      <div class="card-body">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Nom</th>
-              <th>Prix</th>
-              <th>Date Création</th>
-              <th>Catégorie</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let evenement of evenements | searchFilter:searchTerm">
-            <tr>
-              <td>{{ evenement.idEvenement }}</td>
-              <td>{{ evenement.nomEvenement }}</td>
-              <td>{{ evenement.prixEvenement }}</td>
-              <td>{{ evenement.dateCreation | date: 'dd/MM/yyyy' }}</td>
-              <td>{{ evenement.categorie?.nomCat }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+        <div class="form-group mx-sm-3 mb-2 mt-2 ">
+        <label>Nom Produit en tapant</label>
+        <input #nom [(ngModel)]="searchTerm" name="searchTerm" class="form-control" >
     </div>
-  </div>
-  
+    </form>
+        
+
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Date Création</th>
+                        <th>Genre</th> <!-- Changed from Catégorie to Genre -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let evenement of evenements | searchFilter:searchTerm">
+                        <td>{{ evenement.idEvenement }}</td>
+                        <td>{{ evenement.nomEvenement }}</td>
+                        <td>{{ evenement.prixEvenement }}</td>
+                        <td>{{ evenement.dateCreation | date: 'dd/MM/yyyy' }}</td>
+                        <td>{{ evenement.genre?.nomGenre }}</td> <!-- Changed from categorie to genre -->
+                        
+                        <td><a class="btn btn-success" [routerLink]="['/updatePc', evenement.idEvenement]">Modifier</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
