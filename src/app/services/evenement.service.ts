@@ -7,8 +7,11 @@ import { Genre } from '../model/genre.model';
 })
 export class EvenementService {
   evenements: evenement[]; // Array to hold events
+  evenement= new evenement();
   genres: Genre[]; // Array to hold genres
-  
+  genre= new Genre();
+  evenementsRecherche: evenement[] = [];
+
   constructor() {
     // Initialize the genres array
     this.genres = [
@@ -74,8 +77,18 @@ export class EvenementService {
 
   // Search events by genre
   rechercherParGenre(idGenre: number): evenement[] {
-    return this.evenements.filter(cur => cur.genre.idGenre === idGenre);
+    this.evenementsRecherche = [];
+    
+    this.evenements.forEach(cur => {
+      if (idGenre == cur.genre.idGenre) {
+        console.log("cur " + cur);
+        this.evenementsRecherche.push(cur);
+      }
+    });
+    
+    return this.evenementsRecherche;
   }
+  
 
   // Search events by name
   rechercheParNom(nom: string): evenement[] {

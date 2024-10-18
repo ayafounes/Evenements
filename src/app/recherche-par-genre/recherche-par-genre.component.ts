@@ -20,7 +20,7 @@ export class RechercheParGenreComponent {
   }
 
   onChange(){
-    
+    this.evenements= this.ett.rechercherParGenre(this.idGenre);
     console.log(this.idGenre);
   }
   SupprimerEvenement(event:evenement){
