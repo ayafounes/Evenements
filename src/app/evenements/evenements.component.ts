@@ -11,11 +11,11 @@ import { EvenementService } from '../services/evenement.service';
 export class EvenementsComponent {
   evenements : evenement[];
   
-  constructor(private produitServices: EvenementService  ){
-    this.evenements=this.produitServices.ListeEvenements();
+  constructor(private ett: EvenementService  ){
+    this.evenements=this.ett.ListeEvenements();
     
          
-   
+    
   
   }
   ngOnInit(): void{
@@ -24,7 +24,7 @@ export class EvenementsComponent {
   SupprimerEvenement(event:evenement){
     let conf=confirm("Etes-vous sur ?");
     if(conf){
-    this.produitServices.SupprimerEvenement(event);
+    this.ett.SupprimerEvenement(event);
     }
   }
 }

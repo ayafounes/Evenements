@@ -1,5 +1,15 @@
 
     <div class="container">
+        <div class="col-sm-4 col-md-4 col-lg-4 mb-4">
+            <label>Genres </label>
+            <select class="form-control form-control-lg" id="idGenre" name="idGenre" [(ngModel)]="idGenre"
+                (change)="onChange()">
+        
+                <option *ngFor="let genre of Genres" value="{{genre.idGenre}}">
+                    {{genre.nomGenre}}
+                </option>
+            </select>
+        </div>
         <div class="card shadow mb-4">
             <div class="card-body">
             <table class="table table-striped">
@@ -8,8 +18,8 @@
                         <th>id</th><th>Nom</th><th>Prix</th><th>date de creation</th><th>Genre</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let evenement of evenements">
-                    <tr>
+                <tbody >
+                    <tr *ngFor="let evenement of evenements">
                         <td>{{evenement.idEvenement}}</td>
                         <td>{{evenement.nomEvenement}}</td>
                         <td>{{evenement.prixEvenement}}</td>
