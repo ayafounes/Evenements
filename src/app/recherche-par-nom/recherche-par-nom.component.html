@@ -1,8 +1,15 @@
 <div class="container">
     <form class="form-inline">
         <div class="form-group mx-sm-3 mb-2 mt-2 ">
-        <label>Nom Produit en tapant</label>
-        <input #nom [(ngModel)]="searchTerm" name="searchTerm" class="form-control" >
+        <label>Nom Produit</label>
+        <input 
+        #nom 
+        [(ngModel)]="searchTerm" 
+        name="searchTerm" 
+        class="form-control" 
+        (keyup)="onKeyUp(searchTerm)" 
+        placeholder="Rechercher un événement"
+      >
     </div>
     </form>
         
@@ -21,14 +28,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let evenement of evenements | searchFilter:searchTerm">
+                    <tr *ngFor="let evenement of evenements | searchFilter : searchTerm">
                         <td>{{ evenement.idEvenement }}</td>
                         <td>{{ evenement.nomEvenement }}</td>
                         <td>{{ evenement.prixEvenement }}</td>
                         <td>{{ evenement.dateCreation | date: 'dd/MM/yyyy' }}</td>
                         <td>{{ evenement.genre?.nomGenre }}</td> <!-- Changed from categorie to genre -->
                         
-                        <td><a class="btn btn-success" [routerLink]="['/updatePc', evenement.idEvenement]">Modifier</a></td>
+                        
                     </tr>
                 </tbody>
             </table>
