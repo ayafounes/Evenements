@@ -6,26 +6,26 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
+        <!-- Home link, always visible -->
         <li class="nav-item active">
-          <a class="nav-link" routerLink="/evenements">Home</a>
+          <a class="nav-link" routerLink="/evenements">Accueil</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/add-evenements">Ajouter</a>
-        </li>
+
+        <!-- Recherche par Genre, always visible -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/rechercheParGenre">Recherche par Genre</a>
         </li>
+
+        <!-- Recherche par Nom, always visible -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/rechercheParNom">Recherche par Nom</a>
         </li>
+
+        <!-- Login link, only visible if not logged in -->
         <li class="nav-item">
-          <a class="nav-link" href="#"></a>
+          <a class="nav-link" routerLink="/login">Login</a>
         </li>
       </ul>
-      <form class="d-flex" action="/action_page.php">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-light" type="submit">Rechercher</button>
-      </form>
     </div>
   </div>
 </nav>
