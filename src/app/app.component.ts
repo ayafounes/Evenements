@@ -9,10 +9,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'MesEvenements';
+  username!: string;
 
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
+    
     let isloggedin: string | null = localStorage.getItem('isloggedIn');
     let loggedUser: string | null = localStorage.getItem('loggedUser');
 

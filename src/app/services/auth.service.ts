@@ -16,10 +16,10 @@ export class AuthService {
       "enabled": true
     },
     {
-      "username": "nadhem",
+      "username": "aya",
       "password": "123",
       "roles": ['USER'],
-      "email": "nadhem@example.com",
+      "email": "aya@example.com",
       "enabled": true
     }
   ];

@@ -6,27 +6,45 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav me-auto">
-        <!-- Home link, always visible -->
+        <!-- Accueil (en dehors du menu déroulant) -->
         <li class="nav-item active">
           <a class="nav-link" routerLink="/evenements">Accueil</a>
         </li>
-
-        <!-- Recherche par Genre, always visible -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/rechercheParGenre">Recherche par Genre</a>
+        
+        <!-- Dropdown menu pour Événements -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="evenementsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Événements
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="evenementsDropdown">
+            <!-- Ajouter un événement (Visible seulement pour les admins) -->
+            <li *ngIf="authService.isAdmin()">
+              <a class="dropdown-item" routerLink="/add-evenements">Ajouter</a>
+            </li>
+            <li><a class="dropdown-item" routerLink="/rechercheParGenre">Recherche par Genre</a></li>
+            <li><a class="dropdown-item" routerLink="/rechercheParNom">Recherche par Nom</a></li>
+          </ul>
         </li>
+      </ul>
 
-        <!-- Recherche par Nom, always visible -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/rechercheParNom">Recherche par Nom</a>
-        </li>
-
-        <!-- Login link, only visible if not logged in -->
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login">Login</a>
+      <!-- Dropdown menu pour Username (Login / Logout / Profile) -->
+      <ul class="navbar-nav ms-auto">
+        <li> <a class="nav-link">{{authService.loggedUser}}</a></li>
+        <li class="nav-item dropdown">
+          <!-- Affichage du username ici -->
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-bs-toggle="dropdown" aria-expanded="false">
+            Connexion
+          </a>
+          <!-- Liste déroulante pour Login, Logout, Profile -->
+          <ul class="dropdown-menu" aria-labelledby="navbardrop">
+            <li><a *ngIf="!authService.isloggedIn" class="dropdown-item" routerLink = "login">login</a></li>
+            <li><a *ngIf="authService.isloggedIn" class="dropdown-item" (click) = "onLogout()">logout</a></li>
+            <li><a class="dropdown-item" routerLink="/profile">Profile</a></li>
+          </ul>
         </li>
       </ul>
     </div>
   </div>
 </nav>
+
 <router-outlet></router-outlet>

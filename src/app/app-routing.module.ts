@@ -7,14 +7,14 @@ import { RechercheParGenreComponent } from './recherche-par-genre/recherche-par-
 import { RechercheParNomComponent } from './recherche-par-nom/recherche-par-nom.component';
 import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
-import { EvenementGuard } from './evenement.guard'; // Adjust path if necessary
+import { EvenementsGuard } from './evenement.guard'; // Adjust path if necessary
 import { RegisterComponent } from './register/register.component';
 
 
 
 const routes: Routes = [
   {path : "evenements", component: EvenementsComponent},
-  {path : "add-evenements", component: AddEvenementComponent},
+  {path : "add-evenements", component: AddEvenementComponent,canActivate:[EvenementsGuard]},
   {path:"updateEvenement/:id",component:UpdateEvenementComponent},
   
   {path: "rechercheParGenre", component : RechercheParGenreComponent},
@@ -22,7 +22,7 @@ const routes: Routes = [
   {path :"", redirectTo:"evenements", pathMatch:"full" },
   { path: 'login', component: LoginComponent },
   {path: 'app-forbidden', component: ForbiddenComponent},
-  { path: 'evenements', component: EvenementsComponent, canActivate: [EvenementGuard] },
+  { path: 'evenements', component: EvenementsComponent, canActivate: [EvenementsGuard] },
   {path: 'register', component: RegisterComponent}
 
 ];

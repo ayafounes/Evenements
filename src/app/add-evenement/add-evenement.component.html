@@ -1,38 +1,85 @@
-<div class="container">
-    <div>
-        <h2>Ajouter un nouvel evenement</h2>
-    </div>
-    <form>
-        <div class="col-sm-2 col-md-2 col-lg-2">
-            <label>Id evenement</label>
-            <input type="text" [(ngModel)]="newEvenement.idEvenement" name="idEvenement" class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>Nom de evenement</label>
-            <input type="text"[(ngModel)]="newEvenement.nomEvenement" name="nomEvenement" class="form-control">
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-2">
-            <label>Prix de evenement</label>
-            <input type="number"[(ngModel)]="newEvenement.prixEvenement" name="prixEvenement" class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>date de creation</label>
-            <input type="date"[(ngModel)]="newEvenement.dateCreation" name="dateCreation" class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>Genre</label>
-            <select class="form-control form-control-lg" id="idGenre" name="idGenre" [(ngModel)]="newIdGenre">
-                <option *ngFor="let gen of genres" [value]="gen.idGenre">
-                    {{gen.nomGenre}}
-                </option>
+<div class="container mt-5">
+    <div class="row justify-content-md-center">
+      <div class="col-md-6">
+        <form [formGroup]="evenementForm" (ngSubmit)="addEvenement()">
+          
+          <div class="alert alert-danger" *ngIf="err">
+            <strong>{{ err }}</strong>
+          </div>
+  
+          <!-- ID Evenement Field -->
+          <div class="form-group">
+            <label>Id Evenement :</label>
+            <input type="text" class="form-control" formControlName="idEvenement">
+            <span *ngIf="evenementForm.controls['idEvenement'].hasError('required') && evenementForm.controls['idEvenement'].touched" class="text-danger">
+              Id Evenement est obligatoire
+            </span>
+            <span *ngIf="evenementForm.controls['idEvenement'].hasError('minlength') && evenementForm.controls['idEvenement'].touched" class="text-danger">
+              Id Evenement doit avoir au moins 3 caractères
+            </span>
+          </div>
+  
+          <!-- Nom Evenement Field -->
+          <div class="form-group">
+            <label>Nom de l'événement :</label>
+            <input type="text" class="form-control" formControlName="nomEvenement">
+            <span *ngIf="evenementForm.controls['nomEvenement'].hasError('required') && evenementForm.controls['nomEvenement'].touched" class="text-danger">
+              Nom de l'événement est obligatoire
+            </span>
+            <span *ngIf="evenementForm.controls['nomEvenement'].hasError('minlength') && evenementForm.controls['nomEvenement'].touched" class="text-danger">
+              Nom de l'événement doit avoir au moins 3 caractères
+            </span>
+          </div>
+  
+          <!-- Prix Evenement Field -->
+          <div class="form-group">
+            <label>Prix de l'événement :</label>
+            <input type="number" class="form-control" formControlName="prixEvenement">
+            <span *ngIf="evenementForm.controls['prixEvenement'].hasError('required') && evenementForm.controls['prixEvenement'].touched" class="text-danger">
+              Prix de l'événement est obligatoire
+            </span>
+          </div>
+  
+          <!-- Date de Creation Field -->
+          <div class="form-group">
+            <label>Date de création :</label>
+            <input type="date" class="form-control" formControlName="dateCreation">
+            <span *ngIf="evenementForm.controls['dateCreation'].hasError('required') && evenementForm.controls['dateCreation'].touched" class="text-danger">
+              Date de création est obligatoire
+            </span>
+          </div>
+  
+          <!-- Genre Field -->
+          <div class="form-group">
+            <label>Genre :</label>
+            <select class="form-control" formControlName="idGenre">
+              <option *ngFor="let gen of genres" [value]="gen.idGenre">
+                {{ gen.nomGenre }}
+              </option>
             </select>
-        </div>
-        <div class="mt-2">
-            <button type="submit" (click)="addEvenement()" class="btn btn-success">ajouter</button>
-            <div>
-                <h3>{{message}}</h3>
-            
+            <span *ngIf="evenementForm.controls['idGenre'].hasError('required') && evenementForm.controls['idGenre'].touched" class="text-danger">
+              Genre est obligatoire
+            </span>
+          </div>
+  
+          <!-- Loading Spinner -->
+          <div *ngIf="loading" class="d-flex justify-content-center mt-2">
+            <div class="spinner-border" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
-        </div>
-    </form>
-</div>
+          </div>
+  
+          <!-- Submit Button -->
+          <button type="submit" [disabled]="evenementForm.invalid" class="btn btn-success mt-2">
+            Ajouter
+          </button>
+  
+          <!-- Success Message -->
+          <div *ngIf="message" class="alert alert-success mt-2">
+            {{ message }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
