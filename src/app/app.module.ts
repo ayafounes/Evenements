@@ -17,6 +17,8 @@ import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthService } from './services/auth.service';
+import { ListeGenresComponent } from './liste-genres/liste-genres.component';
+import { UpdateGenreComponent } from './update-genre/update-genre.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AuthService } from './services/auth.service';
     SearchFilterPipe,
     LoginComponent,
     ForbiddenComponent,
-    RegisterComponent
+    RegisterComponent,
+    ListeGenresComponent,
+    UpdateGenreComponent
   ],
   imports: [
     BrowserModule,

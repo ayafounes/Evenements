@@ -9,12 +9,13 @@ import { LoginComponent } from './login/login.component';
 import { ForbiddenComponent } from './forbidden/forbidden.component';
 import { EvenementsGuard } from './evenement.guard'; // Adjust path if necessary
 import { RegisterComponent } from './register/register.component';
+import { ListeGenresComponent } from './liste-genres/liste-genres.component';
 
 
 
 const routes: Routes = [
   {path : "evenements", component: EvenementsComponent},
-  {path : "add-evenements", component: AddEvenementComponent,canActivate:[EvenementsGuard]},
+  {path : "add-evenements", component: AddEvenementComponent},
   {path:"updateEvenement/:id",component:UpdateEvenementComponent},
   
   {path: "rechercheParGenre", component : RechercheParGenreComponent},
@@ -23,7 +24,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {path: 'app-forbidden', component: ForbiddenComponent},
   { path: 'evenements', component: EvenementsComponent, canActivate: [EvenementsGuard] },
-  {path: 'register', component: RegisterComponent}
+  {path: 'register', component: RegisterComponent},
+  {path: "listeGenres", component : ListeGenresComponent}
 
 ];
 

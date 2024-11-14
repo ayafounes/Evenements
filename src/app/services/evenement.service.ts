@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { evenement } from '../model/evenement.model';
 import { Genre } from '../model/genre.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -98,5 +99,14 @@ export class EvenementService {
     return this.evenements.filter(event =>
       event.nomEvenement.toLowerCase().includes(nom.toLowerCase())
     );
+  }
+
+  ajouterGenre(genre: Genre): Genre {
+    const newId = this.genres.length > 0 
+      ? Math.max(...this.genres.map(eq => eq.idGenre ?? 0)) + 1 
+      : 1;
+    genre.idGenre = newId;
+    this.genres.push(genre);
+    return genre;
   }
 }
