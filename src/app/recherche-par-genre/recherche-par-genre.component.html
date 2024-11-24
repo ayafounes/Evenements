@@ -26,8 +26,8 @@
                         <td>{{evenement.prixEvenement}}</td>
                         <td>{{ evenement?.dateCreation | date:'dd/MM/yyyy' }}</td>
                         <td>{{evenement.genre.nomGenre}}</td>
-                        <td><a class="btn btn-danger" (click)="SupprimerEvenement(evenement)">Supprimer</a></td>
-                        <td><a class="btn btn-success"[routerLink]="['/updateEvenement',evenement.idEvenement]">modifier</a></td>
+                        <!-- <td><a class="btn btn-danger" (click)="supprimerEvenement(evenement)">Supprimer</a></td>
+                        <td><a class="btn btn-success"[routerLink]="['/updateEvenement',evenement.idEvenement]">modifier</a></td> -->
                        
                     </tr>
                 </tbody>

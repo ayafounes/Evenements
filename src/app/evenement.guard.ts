@@ -1,6 +1,10 @@
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot,UrlTree } from '@angular/router';
 import { AuthService } from './services/auth.service';
-
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+@Injectable({
+  providedIn: 'root'
+})
 export class EvenementsGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -11,7 +15,7 @@ export class EvenementsGuard implements CanActivate {
     return true;
     else
     {
-    this.router.navigate(['app-forbidden']);
+    this.router.navigate(["app-forbidden"]);
     return false;
     }
   }

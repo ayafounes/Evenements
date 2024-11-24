@@ -15,15 +15,15 @@ import { ListeGenresComponent } from './liste-genres/liste-genres.component';
 
 const routes: Routes = [
   {path : "evenements", component: EvenementsComponent},
-  {path : "add-evenements", component: AddEvenementComponent},
-  {path:"updateEvenement/:id",component:UpdateEvenementComponent},
+  {path : "add-evenements", component: AddEvenementComponent,canActivate: [EvenementsGuard]},
+  {path:"updateEvenement/:id",component:UpdateEvenementComponent,canActivate: [EvenementsGuard]},
   
   {path: "rechercheParGenre", component : RechercheParGenreComponent},
   {path: "rechercheParNom", component : RechercheParNomComponent},
   {path :"", redirectTo:"evenements", pathMatch:"full" },
   { path: 'login', component: LoginComponent },
-  {path: 'app-forbidden', component: ForbiddenComponent},
-  { path: 'evenements', component: EvenementsComponent, canActivate: [EvenementsGuard] },
+  {path:"app-forbidden",component:ForbiddenComponent},
+  { path: 'evenements', component: EvenementsComponent},
   {path: 'register', component: RegisterComponent},
   {path: "listeGenres", component : ListeGenresComponent}
 

@@ -14,9 +14,10 @@ export class AppComponent {
   constructor(public authService: AuthService, private router: Router) {}
 
   ngOnInit() {
-    
-    let isloggedin: string | null = localStorage.getItem('isloggedIn');
-    let loggedUser: string | null = localStorage.getItem('loggedUser');
+    let isloggedin: string;
+    let loggedUser: string;
+    isloggedin= localStorage.getItem('isloggedIn')?? 'false';
+    loggedUser=localStorage.getItem('loggedUser')??'';
 
     if (isloggedin !== "true" || !loggedUser) {
       this.router.navigate(['/login']);

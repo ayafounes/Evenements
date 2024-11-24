@@ -1,38 +1,65 @@
 <div class="container">
-    <div>
-        <h2>Modifier  evenement</h2>
+  <div>
+    <h2>Modifier evenement</h2>
+  </div>
+  <form (ngSubmit)="updateEvenement()">
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <label for="idEvenement">Id evenement</label>
+      <input
+        type="text"
+        id="idEvenement"
+        [(ngModel)]="currentEvenement.idEvenement"
+        name="idEvenement"
+        class="form-control"
+        readonly
+      />
     </div>
-    <form>
-        <div readonly class="col-sm-2 col-md-2 col-lg-2">
-            <label>Id evenement</label>
-            <input type="text" [(ngModel)]="currentEvenement.idEvenement" name="idEvenement" class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>Nom evenement</label>
-            <input type="text"[(ngModel)]="currentEvenement.nomEvenement" name="nomEvenement" class="form-control">
-        </div>
-        <div class="col-sm-2 col-md-2 col-lg-2">
-            <label>Prix evenement</label>
-            <input type="number" [(ngModel)]= "currentEvenement.prixEvenement"
-            name="prixEvenement" class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>date de creation</label>
-            <input type="date" [ngModel]="currentEvenement.dateCreation | date: 'yyyy-MM-dd'"
-            (ngModelChange)=" currentEvenement.dateCreation= $event" name="dateCreation"
-            class="form-control">
-        </div>
-        <div class="col-sm-4 col-md-4 col-lg-4">
-            <label>Genre</label>
-            <select class="form-control form-control-lg" id="idCat" name="idCat" [(ngModel)]="updateGenreId">
-                <option *ngFor="let gen of genre" [value]="gen.idGenre">
-                    {{gen.nomGenre}}
-                </option>
-            </select>
-        </div>
-        <div class="mt-2">
-            <button type="submit" (click)="updateEvenement()" class="btn btn-success">modifier</button>
-            
-        </div>
-    </form>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label for="nomEvenement">Nom evenement</label>
+      <input
+        type="text"
+        id="nomEvenement"
+        [(ngModel)]="currentEvenement.nomEvenement"
+        name="nomEvenement"
+        class="form-control"
+      />
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+      <label for="prixEvenement">Prix evenement</label>
+      <input
+        type="number"
+        id="prixEvenement"
+        [(ngModel)]="currentEvenement.prixEvenement"
+        name="prixEvenement"
+        class="form-control"
+      />
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label for="dateCreation">Date de creation</label>
+      <input
+        type="date"
+        id="dateCreation"
+        [ngModel]="currentEvenement.dateCreation | date: 'yyyy-MM-dd'"
+        (ngModelChange)="currentEvenement.dateCreation = $event"
+        name="dateCreation"
+        class="form-control"
+      />
+    </div>
+    <div class="col-sm-4 col-md-4 col-lg-4">
+      <label for="idGenre">Genre</label>
+      <select
+        class="form-control form-control-lg"
+        id="idGenre"
+        name="idGenre"
+        [(ngModel)]="updateGenreId"
+      >
+        <option *ngFor="let gen of genres" [value]="gen.idGenre">
+          {{ gen.nomGenre }}
+        </option>
+      </select>
+    </div>
+    <div class="mt-2">
+      <button type="submit" class="btn btn-success">Modifier</button>
+    </div>
+  </form>
 </div>

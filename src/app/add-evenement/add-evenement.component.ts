@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { evenement } from '../model/evenement.model';
 import { EvenementService } from '../services/evenement.service';
+import { evenement } from '../model/evenement.model';
 import { Genre } from '../model/genre.model';
 
 @Component({
@@ -11,59 +10,51 @@ import { Genre } from '../model/genre.model';
   templateUrl: './add-evenement.component.html',
 })
 export class AddEvenementComponent implements OnInit {
+  genres!: Genre[];
+  newIdGenre!: number;
   newEvenement = new evenement();
   evenementForm!: FormGroup;
-  message: string = '';
-  err: string = '';
-  genres!: Genre[];
   newGenre!: Genre;
-  loading: boolean = false;
-
   constructor(
-    private ett: EvenementService, 
-    private route: ActivatedRoute,
+    private evenementService: EvenementService,
     private router: Router,
-    private fb: FormBuilder
+    private formBuilder: FormBuilder
   ) {}
 
   ngOnInit(): void {
-    this.genres = this.ett.listeGenres();
-    this.evenementForm = this.fb.group({
-      idEvenement: ['', [Validators.required, Validators.minLength(1)]],
+    // Fetch genres
+    this.evenementService.listeGenres().subscribe(genre => {this.genres = genre._embedded.genres;
+      console.log(genre);
+    });
+
+    this.evenementForm = this.formBuilder.group({
+      idEvenement: ['', []],
       nomEvenement: ['', [Validators.required, Validators.minLength(3)]],
       prixEvenement: ['', [Validators.required]],
-      dateCreation: ['', Validators.required],
-      idGenre: ['', Validators.required]
+      dateCreation: ['', [Validators.required]],
+      nomGenre: [null, [Validators.required]],
     });
   }
 
-  addEvenement() {
+  addEvenement(): void {
     if (this.evenementForm.invalid) {
-      this.err = 'Veuillez remplir tous les champs obligatoires avec les longueurs minimales requises.';
+      // Mark all fields as touched to show validation errors
+      this.evenementForm.markAllAsTouched();
       return;
     }
-
-    this.loading = true;
-    this.err = ''; 
-
-    this.newEvenement.idEvenement = this.evenementForm.value.idEvenement;
-    this.newEvenement.nomEvenement = this.evenementForm.value.nomEvenement;
-    this.newEvenement.prixEvenement = this.evenementForm.value.prixEvenement;
-    this.newEvenement.dateCreation = this.evenementForm.value.dateCreation;
-    this.newGenre = this.ett.consulterGenre(this.evenementForm.value.idGenre);
-    this.newEvenement.genre = this.newGenre;
-
-    
-    this.ett.ajoutereven(this.newEvenement);
-    
-    
-    this.message = `Evenement ${this.newEvenement.nomEvenement} ajouté avec succès`;
-    
-    
-    this.router.navigate(['/evenements']); 
-
-    
-    this.evenementForm.reset();
-    this.loading = false;
+  
+    // Populate newEvenement with form values
+    this.newEvenement = {
+      ...this.evenementForm.value,
+      genre: this.genres.find(genre => genre.idGenre === this.evenementForm.value.nomGenre),
+    };
+  
+    // Add the event and reset the form
+    this.evenementService.ajouterEvenement(this.newEvenement).subscribe(() => {
+      console.log('Événement ajouté avec succès');
+      this.evenementForm.reset();
+      this.router.navigate(['/evenements']);
+    });
   }
+  
 }

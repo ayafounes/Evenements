@@ -19,6 +19,8 @@ import { RegisterComponent } from './register/register.component';
 import { AuthService } from './services/auth.service';
 import { ListeGenresComponent } from './liste-genres/liste-genres.component';
 import { UpdateGenreComponent } from './update-genre/update-genre.component';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -33,13 +35,14 @@ import { UpdateGenreComponent } from './update-genre/update-genre.component';
     ForbiddenComponent,
     RegisterComponent,
     ListeGenresComponent,
-    UpdateGenreComponent
-  ],
+    UpdateGenreComponent  ],
   imports: [
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [
     AuthService,

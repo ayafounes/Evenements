@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { evenement } from '../model/evenement.model';
 import { EvenementService } from '../services/evenement.service';
 
@@ -7,17 +7,20 @@ import { EvenementService } from '../services/evenement.service';
   templateUrl: './recherche-par-nom.component.html',
   styles: []
 })
-export class RechercheParNomComponent {
+export class RechercheParNomComponent implements OnInit {
 
-  evenements!: evenement[];
-  allEvenements!: evenement[]; // Holds the original list of events
+  evenements!: evenement[];  // To hold the filtered list of events
+  allEvenements!: evenement[]; // To hold the original list of events from the API
   searchTerm: string = ''; // Initialize with an empty string
 
   constructor(private ett: EvenementService) {}
 
   ngOnInit(): void {
-    this.allEvenements = this.ett.ListeEvenements(); // Load all events initially
-    this.evenements = [...this.allEvenements]; // Copy to evenements to show all initially
+    // Fetch all events from the API
+    this.ett.ListeEvenements().subscribe((data: evenement[]) => {
+      this.allEvenements = data; // Store the events in the original array
+      this.evenements = [...this.allEvenements]; // Copy to evenements to show all initially
+    });
   }
 
   onKeyUp(filterText: string): void {

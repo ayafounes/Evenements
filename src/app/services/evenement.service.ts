@@ -1,112 +1,84 @@
+
 import { Injectable } from '@angular/core';
 import { evenement } from '../model/evenement.model';
 import { Genre } from '../model/genre.model';
+import { GenreWrapper } from '../model/genreWrapped.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+const httpOptions = {
+  headers: new HttpHeaders({'Content-Type': 'application/json'})
+};
 
 @Injectable({
   providedIn: 'root'
 })
 export class EvenementService {
-  evenements: evenement[]; // Array to hold events
-  evenement= new evenement();
-  genres: Genre[]; // Array to hold genres
-  genre= new Genre();
+  evenements!: evenement[];
+  evenement = new evenement();
+  genre = new Genre();
   evenementsRecherche: evenement[] = [];
+  apiURLGenre: string = 'http://localhost:8091/evenements/genre';
+  apiURL: string='http://localhost:8091/evenements/api' ;
 
-  constructor() {
-    // Initialize the genres array
-    this.genres = [
-      { idGenre: 1, nomGenre: "pop" },
-      { idGenre: 2, nomGenre: "rock" },
-      { idGenre: 3, nomGenre: "folk" },
-      { idGenre: 4, nomGenre: "electro-pop" }
-    ];
+  constructor(private http: HttpClient) {}
 
-    // Initialize the events array
-    this.evenements = [
-      { idEvenement: 1, nomEvenement: "Taylor Swift", prixEvenement: 500, dateCreation: new Date("12/27/2020"), genre: { idGenre: 1, nomGenre: "pop" } },
-      { idEvenement: 2, nomEvenement: "Coldplay", prixEvenement: 600, dateCreation: new Date("12/27/2023"), genre: { idGenre: 2, nomGenre: "rock" } },
-      { idEvenement: 3, nomEvenement: "Hozier", prixEvenement: 550, dateCreation: new Date("12/12/2024"), genre: { idGenre: 3, nomGenre: "folk" } },
-      { idEvenement: 4, nomEvenement: "Billie Eillish", prixEvenement: 700, dateCreation: new Date("10/12/2024"), genre: { idGenre: 4, nomGenre: "electro-pop" } }
-    ];
+  ListeEvenements(): Observable<evenement[]> {
+    return this.http.get<evenement[]>(this.apiURL);
   }
 
-  // List all events
-  ListeEvenements(): evenement[] {
-    return this.evenements;
+  ajouterEvenement(event: evenement): Observable<evenement> {
+    return this.http.post<evenement>(this.apiURL, event, httpOptions);
   }
 
-  // Add an event to the list
-  ajoutereven(e: evenement) {
-    this.evenements.push(e);
+  supprimerEvenement(id: number) {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.delete(url, httpOptions);
   }
 
-  // Remove an event from the list
-  SupprimerEvenement(event: evenement) {
-    const index = this.evenements.indexOf(event, 0);
-    if (index > -1) {
-      this.evenements.splice(index, 1);
-    }
+  consulterEvenement(id: number): Observable<evenement> {
+    const url = `${this.apiURL}/${id}`;
+    return this.http.get<evenement>(url);
   }
-
-  // Get event details by ID
-  consulterEvenement(id: number): evenement {
-    return this.evenements.find(e => e.idEvenement == id)!;
-  }
-
-  // Update an event by removing and adding it again
-  updateEvenement(e: evenement) {
-    this.SupprimerEvenement(e);
-    this.ajoutereven(e);
-    this.trierEvenements();
-  }
-
-  // Sort events by ID
-  trierEvenements() {
-    this.evenements.sort((n1, n2) => n1.idEvenement - n2.idEvenement);
-  }
-
-  // List all available genres
-  listeGenres(): Genre[] {
-    return this.genres;
-  }
-
-  // Get genre details by ID
-  consulterGenre(id: number): Genre {
-    return this.genres.find(cat => cat.idGenre == id)!;
-  }
-
-  // Search events by genre
-  rechercherParGenre(idGenre: number): evenement[] {
-    this.evenementsRecherche = [];
-    
-    this.evenements.forEach(cur => {
-      if (idGenre == cur.genre.idGenre) {
-        console.log("cur " + cur);
-        this.evenementsRecherche.push(cur);
+  trierEvenement() {
+    this.evenements = this.evenements.sort((n1, n2) => {
+      if (n1.idEvenement! > n2.idEvenement!) {
+        return 1;
       }
+      if (n1.idEvenement! < n2.idEvenement!) {
+        return -1;
+      }
+      return 0;
     });
-    
-    return this.evenementsRecherche;
-  }
-  
-
-  // Search events by name
-  rechercheParNom(nom: string): evenement[] {
-    if (!nom) {
-      return this.evenements; // Return all events if no name is provided
-    }
-    return this.evenements.filter(event =>
-      event.nomEvenement.toLowerCase().includes(nom.toLowerCase())
-    );
   }
 
-  ajouterGenre(genre: Genre): Genre {
-    const newId = this.genres.length > 0 
-      ? Math.max(...this.genres.map(eq => eq.idGenre ?? 0)) + 1 
-      : 1;
-    genre.idGenre = newId;
-    this.genres.push(genre);
-    return genre;
+  updateEvenement(event: evenement): Observable<evenement> {
+  return this.http.put<evenement>(this.apiURL, event, httpOptions);
+}
+
+
+listeGenres(): Observable<GenreWrapper> {
+  return this.http.get<GenreWrapper>(this.apiURLGenre);
+}
+
+
+consulterGenre(id: number): Observable<Genre> {
+  const url = `${this.apiURLGenre}/${id}`;
+  return this.http.get<Genre>(url);
+}
+
+
+  rechercherParGenre(idGenre: number): Observable<evenement[]> {
+    const url = `${this.apiURL}/genre/${idGenre}`;
+    return this.http.get<evenement[]>(url);
+  }
+
+  /* rechercheParNom(nom: string): Observable<evenement[]> {
+    const url = `${apiURL}?nom=${nom}`;
+    return this.http.get<evenement[]>(url);
+  } */
+
+  ajouterGenre(genre: Genre): Observable<Genre> {
+    return this.http.post<Genre>(this.apiURLGenre, genre, httpOptions);
   }
 }

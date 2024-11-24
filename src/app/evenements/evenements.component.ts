@@ -1,31 +1,41 @@
-import { Component } from '@angular/core';
-import { evenement } from '../model/evenement.model';
+import { Component, OnInit } from '@angular/core';
 import { EvenementService } from '../services/evenement.service';
 import { AuthService } from '../services/auth.service';
-
+import { evenement } from '../model/evenement.model';
 
 @Component({
   selector: 'app-evenements',
   templateUrl: './evenements.component.html'
-  
 })
-export class EvenementsComponent {
-  evenements : evenement[];
+export class EvenementsComponent implements OnInit {
+  evenements!: evenement[];
   
-  constructor(private ett: EvenementService,public authService: AuthService  ){
-    this.evenements=this.ett.ListeEvenements();
+  constructor(private evenementService: EvenementService, public authService: AuthService) {}
+
+  ngOnInit(): void {
+    this.chargerEvenement();
     
-         
-    
-  
   }
-  ngOnInit(): void{
-  
+
+  chargerEvenement(): void {
+    this.evenementService.ListeEvenements().subscribe(evenements => {
+      console.log(evenements);
+      this.evenements = evenements;
+    });
   }
-  SupprimerEvenement(event:evenement){
-    let conf=confirm("Etes-vous sur ?");
-    if(conf){
-    this.ett.SupprimerEvenement(event);
+  
+  
+
+  supprimerEvenement(event: evenement) {
+    let conf = confirm('Etes-vous sûr de vouloir supprimer cet événement?');
+    if (conf) {
+      this.evenementService.supprimerEvenement(event.idEvenement).subscribe(
+        () => {
+          console.log('Evenement supprimé');
+          this.chargerEvenement(); // Reload the list after deletion
+        },
+        
+      );
     }
   }
 }

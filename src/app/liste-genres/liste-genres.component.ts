@@ -1,45 +1,38 @@
+import { Component, OnInit } from '@angular/core';
 import { Genre } from '../model/genre.model';
 import { EvenementService } from './../services/evenement.service';
-import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-liste-genres',
-  templateUrl: './liste-genres.component.html'
+  templateUrl: './liste-genres.component.html',
+  styles: ``
 })
+export class ListeGenresComponent implements OnInit {
 
-export class ListeGenresComponent  {
+  ajout: boolean = true;
   genres!: Genre[];
-  ajout: boolean=true;
+  updatedGenre: Genre = {"idGenre": 0, nomGenre: ""};
 
-  updatedGenre:Genre = {"idGenre":0,"nomGenre":""};
+  constructor(private EvenementService: EvenementService) { }
 
-  nouvelleGenre: Genre = {
-    idGenre: 0, // ou une autre valeur par défaut
-    nomGenre: '', // ou une valeur par défaut
-  };
-  constructor(private  EvenementService: EvenementService){}
-
-  
-  ngOnInit(): void {this.chargerGenres();}
-
-  ajouterGenre(nouvelleGenres: Genre): void {
-    this.EvenementService.ajouterGenre(nouvelleGenres);
-    this.chargerGenres(); // Actualise l'affichage de la liste après l'ajout
+  ngOnInit(): void {
+    this.chargerGenres();
   }
 
-  genreUpdated(genre:Genre){
-    console.log("genre updated event",genre);
-    this.EvenementService.ajouterGenre(genre);
-    this.chargerGenres();
-    }
-    chargerGenres(){
-      this.genres=this.EvenementService.listeGenres();
+  chargerGenres(): void {
+    this.EvenementService.listeGenres().subscribe(genre => {
+      this.genres = genre._embedded.genres;
       console.log(this.genres);
-      }
+    });
+  }
 
-      updateGenre(genre: Genre) {
-        this.updatedGenre=genre;
-        this.ajout=false;
-        }
-    
+  genreUpdated(genre: Genre): void {
+    console.log("Genre reçu du composant updateGenre:", genre);
+    this.EvenementService.ajouterGenre(genre).subscribe(() => this.chargerGenres());
+  }
+
+  updateGenre(genre: Genre): void {
+    this.updatedGenre = genre;
+    this.ajout = false;
+  }
 }
