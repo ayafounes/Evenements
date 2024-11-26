@@ -46,8 +46,9 @@ export class AddEvenementComponent implements OnInit {
     // Populate newEvenement with form values
     this.newEvenement = {
       ...this.evenementForm.value,
-      genre: this.genres.find(genre => genre.idGenre === this.evenementForm.value.nomGenre),
+      genre: this.genres.find(genre => genre.idGenre === this.evenementForm.value.nomGenre), 
     };
+    
   
     // Add the event and reset the form
     this.evenementService.ajouterEvenement(this.newEvenement).subscribe(() => {

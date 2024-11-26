@@ -10,7 +10,7 @@ import { Genre } from '../model/genre.model';
 })
 export class RechercheParGenreComponent {
   evenements!: evenement[];
-  Genres!: Genre[];
+  genres!: Genre[];
   idGenre!: number;
 
   constructor(private ett: EvenementService) {}
@@ -18,8 +18,8 @@ export class RechercheParGenreComponent {
   ngOnInit(): void {
     // Charger les genres via API
     this.ett.listeGenres().subscribe(genre => {
-        this.Genres = genre._embedded.genres;  
-        console.log('Genres loaded:', this.Genres);
+        this.genres = genre._embedded.genres;  
+        console.log('Genres loaded:', this.genres);
       },
     );}
 
@@ -27,7 +27,9 @@ export class RechercheParGenreComponent {
    
     this.ett.rechercherParGenre(this.idGenre).subscribe(evenements => {
         this.evenements = evenements});
+        
   }
+  
 
  /*  supprimerEvenement(event: evenement): void {
     let conf = confirm("Etes-vous sur ?");
